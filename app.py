@@ -263,4 +263,6 @@ def plant_detail(plant_id):
 
 
 if __name__ == '__main__':
+    # WARNING: Debug mode should be disabled in production
+    # Set debug=False and use a production WSGI server like gunicorn
     app.run(debug=True)
