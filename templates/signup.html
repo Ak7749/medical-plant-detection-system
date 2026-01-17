@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Medical Plant Detection System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .signup-container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 450px;
+        }
+        
+        .signup-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .signup-header h1 {
+            color: #2e7d32;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .signup-header p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #2e7d32;
+        }
+        
+        .password-strength {
+            margin-top: 8px;
+            font-size: 12px;
+        }
+        
+        .strength-bar {
+            height: 4px;
+            background-color: #e0e0e0;
+            border-radius: 2px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+        
+        .strength-bar-fill {
+            height: 100%;
+            transition: all 0.3s;
+            width: 0%;
+        }
+        
+        .strength-weak .strength-bar-fill {
+            width: 33%;
+            background-color: #f44336;
+        }
+        
+        .strength-medium .strength-bar-fill {
+            width: 66%;
+            background-color: #ff9800;
+        }
+        
+        .strength-strong .strength-bar-fill {
+            width: 100%;
+            background-color: #4caf50;
+        }
+        
+        .strength-text {
+            margin-top: 5px;
+            font-weight: 600;
+        }
+        
+        .strength-weak .strength-text {
+            color: #f44336;
+        }
+        
+        .strength-medium .strength-text {
+            color: #ff9800;
+        }
+        
+        .strength-strong .strength-text {
+            color: #4caf50;
+        }
+        
+        .signup-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .signup-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+        }
+        
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .login-link a {
+            color: #2e7d32;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .flash-messages {
+            margin-bottom: 20px;
+        }
+        
+        .flash-message {
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .flash-message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .flash-message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        @media (max-width: 480px) {
+            .signup-container {
+                padding: 30px 20px;
+            }
+            
+            .signup-header h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <div class="signup-header">
+            <h1>🌿 Medical Plant Detection</h1>
+            <p>Create your account</p>
+        </div>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+        <form method="POST" action="{{ url_for('signup') }}" id="signupForm">
+            <div class="form-group">
+                <label for="full_name">Full Name</label>
+                <input type="text" id="full_name" name="full_name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+                <div class="password-strength" id="strengthIndicator" style="display: none;">
+                    <div class="strength-bar">
+                        <div class="strength-bar-fill"></div>
+                    </div>
+                    <div class="strength-text"></div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+            </div>
+            
+            <button type="submit" class="signup-btn">Create Account</button>
+        </form>
+        
+        <div class="login-link">
+            Already have an account? <a href="{{ url_for('login') }}">Sign in here</a>
+        </div>
+    </div>
+    
+    <script>
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirm_password');
+        const strengthIndicator = document.getElementById('strengthIndicator');
+        const signupForm = document.getElementById('signupForm');
+        
+        // Password strength checker
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            
+            if (password.length === 0) {
+                strengthIndicator.style.display = 'none';
+                return;
+            }
+            
+            strengthIndicator.style.display = 'block';
+            
+            let strength = 'weak';
+            let strengthText = 'Weak';
+            
+            // Calculate password strength
+            if (password.length >= 8) {
+                const hasUpper = /[A-Z]/.test(password);
+                const hasLower = /[a-z]/.test(password);
+                const hasNumber = /[0-9]/.test(password);
+                const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+                
+                const criteriaMet = [hasUpper, hasLower, hasNumber, hasSpecial].filter(Boolean).length;
+                
+                if (criteriaMet >= 3) {
+                    strength = 'strong';
+                    strengthText = 'Strong';
+                } else if (criteriaMet >= 2 || password.length >= 10) {
+                    strength = 'medium';
+                    strengthText = 'Medium';
+                }
+            } else if (password.length >= 6) {
+                strength = 'weak';
+                strengthText = 'Weak';
+            }
+            
+            // Update UI
+            strengthIndicator.className = 'password-strength strength-' + strength;
+            strengthIndicator.querySelector('.strength-text').textContent = strengthText;
+        });
+        
+        // Form validation
+        signupForm.addEventListener('submit', function(e) {
+            const password = passwordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
+            
+            if (password !== confirmPassword) {
+                e.preventDefault();
+                alert('Passwords do not match!');
+                return false;
+            }
+            
+            if (password.length < 6) {
+                e.preventDefault();
+                alert('Password must be at least 6 characters long!');
+                return false;
+            }
+        });
+    </script>
+</body>
+</html>
